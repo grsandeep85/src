@@ -1,0 +1,15 @@
+# systemd(8) setup used by Yocto Project
+[Unit]
+Description=Fibonacci Server
+After=network.target
+
+[Service]
+Environment=
+Type=forking
+StandardOutput=journal
+StandardError=journal
+ExecStart=/usr/bin/fibonacci-srv -D
+PIDFIle=/var/tmp/fib_server.pid
+
+[Install]
+WantedBy=default.target

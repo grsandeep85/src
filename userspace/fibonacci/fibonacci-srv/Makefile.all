@@ -1,0 +1,29 @@
+# Makefile for the Fibonacci Server
+# (c) 2017 Rudolf J Streif, rudolf.streif@ibeeto.com
+
+# Files
+SOURCES=fibonacci-srv-unix.c fibonacci-srv-tcp.c
+OBJECTS=$(SOURCES:.c=.o)
+EXEC=fibonacci-srv-unix fibonacci-srv-tcp
+LDPATHS = 
+LDLIBS =
+
+# Define extra flags here
+#EXTRACFLAGS=-ansi
+
+all: $(SOURCES) $(EXEC)
+
+fibonacci-srv-unix: fibonacci-srv-unix.o
+	$(CC) $(LDFLAGS) $^ $(LDPATHS) $(LDLIBS) -o $@
+
+fibonacci-srv-tcp: fibonacci-srv-tcp.o
+	$(CC) $(LDFLAGS) $^ $(LDPATHS) $(LDLIBS) -o $@
+
+%.o : %.c
+	$(CC) $(CFLAGS) $(EXTRACFLAGS) -c $<
+
+install:
+	install $(EXEC) $(DESTDIR)/usr/bin
+
+clean:
+	rm -rf $(OBJECTS) $(EXEC)
